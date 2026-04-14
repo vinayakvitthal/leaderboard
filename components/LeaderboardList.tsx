@@ -2,16 +2,18 @@ import React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import { Participant } from '../types';
 import LeaderboardRow from './LeaderboardRow';
-import { colors } from '../constants/theme';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface Props {
   participants: Participant[];
 }
 
 export default function LeaderboardList({ participants }: Props) {
+  const { colors } = useTheme();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>ALL PARTICIPANTS</Text>
+    <View style={[styles.container, { backgroundColor: colors.card }]}>
+      <Text style={[styles.header, { color: colors.textSecondary }]}>ALL PARTICIPANTS</Text>
       <FlatList
         data={participants}
         keyExtractor={(item) => item.id}
@@ -26,12 +28,10 @@ export default function LeaderboardList({ participants }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.card,
     borderRadius: 10,
     padding: 10,
   },
   header: {
-    color: colors.textSecondary,
     fontSize: 10,
     fontWeight: '700',
     letterSpacing: 1.5,
